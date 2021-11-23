@@ -6,7 +6,8 @@ const recipes = require('./router/recipes')
 app.use(
     cors( {
       origin: ["http://localhost:3000", "http://192.168.1.234:3000",
-       "https://dianas-kitchenette.netlify.app"]
+       "https://dianas-kitchenette.netlify.app"],
+        credentials: true,
     })
   );
 app.use(express.json());
