@@ -15,4 +15,4 @@ app.use(express.json());
 app.use('/', recipes)
 
 
-app.listen(process.env.PORT || 8080, () => console.log('server is up and running!'));
+app.listen(process.env.PORT || 80, () => console.log('server is up and running!'));
