@@ -35,4 +35,8 @@ router.delete('/recipe/:id', (req, res) => {
     .catch(err => handleError(err))
   });
 
+const handleError = (err) => {
+    console.log(err);
+}
+
 module.exports = router
