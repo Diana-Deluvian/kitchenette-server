@@ -2,7 +2,15 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const recipes = require('./router/recipes');;
-const users = require('./router/users')
+const users = require('./router/users');
+
+const passport = require('passport');
+require('./passport/passport')(passport);
+// I should probably reword this so it isn't confusing, 
+// but damn if it isn't the funniest line I have ever written.
+
+
+app.use(passport.initialize());
 
 app.use(
     cors( {

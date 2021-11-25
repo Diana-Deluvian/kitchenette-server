@@ -1,20 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const generatePassword = require('../passport/utils').generatePassword;
+const issueJWT = require('../passport/utils').issueJWT;
+const bcrypt = require('bcrypt');
+require('dotenv').config();
 
-const User = require('../Models/Recipe');
+const User = require('../Models/User');
 
 
-app.post("/login", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
     const user = await User.findOne({ username: req.body.username });
-
+    console.log(user);
     if (!user) return res.status(401).json({ success: false, msg: "user not found" });
-    
-    bcrypt.compare(password, user.password, (err, result) => {
+    console.log(req.body.password, user.hashedPassword)
+    bcrypt.compare(req.body.password + process.env.PEPPER, user.hashedPassword, (err, result) => {
         if (err) handleError(err);
         
         if (result === true) {
-            const tokenObject = utils.issueJWT(user);
+            const tokenObject = issueJWT(user);
             res.status(200).json({ 
                 success: true, 
                 token: tokenObject.token, expiresIn: tokenObject.expires 
@@ -26,7 +29,7 @@ app.post("/login", async (req, res, next) => {
     })
 });
 
-app.post('/register', async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
     const user = await User.findOne({ username: req.body.username });
     if (user) return res.status(401).json({ success: false, msg: "username already exists" });
 
@@ -43,3 +46,5 @@ app.post('/register', async (req, res, next) => {
 const handleError = (err) => {
     console.log(err);
 }
+
+module.exports = router
