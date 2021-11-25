@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const recipes = require('./router/recipes')
+const recipes = require('./router/recipes');;
+const users = require('./router/users')
 
 app.use(
     cors( {
@@ -13,7 +14,8 @@ app.use(
 app.use(express.json());
 
 
-app.use('/', recipes)
+app.use('/', recipes);
+app.use('/users/', users);
 
 
 app.listen(process.env.PORT || 80, () => console.log('server is up and running!'));
