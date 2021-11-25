@@ -10,9 +10,7 @@ const User = require('../Models/User');
 
 router.post("/login", async (req, res, next) => {
     const user = await User.findOne({ username: req.body.username });
-    console.log(user);
     if (!user) return res.status(401).json({ success: false, msg: "user not found" });
-    console.log(req.body.password, user.hashedPassword)
     bcrypt.compare(req.body.password + process.env.PEPPER, user.hashedPassword, (err, result) => {
         if (err) handleError(err);
         
@@ -36,7 +34,6 @@ router.post('/register', async (req, res, next) => {
     const hashedPassword = await generatePassword(req.body.password);
     User.create({ username: req.body.username, hashedPassword }, function (err, user) {
         if (err) return handleError(err);
-        console.log(user)
         res.status(200).json({ success: true, msg: "Welcome aboard!" });
       });
 })

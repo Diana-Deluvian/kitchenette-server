@@ -3,7 +3,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const fs = require('fs');
 require('dotenv').config();
 
-const PRIV_KEY = fs.readFileSync('passport/id_rsa_priv.pem', 'utf8');
+const PRIV_KEY = process.env.PRIV_KEY || fs.readFileSync('passport/id_rsa_priv.pem', 'utf8');
 
 const generatePassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
