@@ -37,6 +37,8 @@ router.get('/recipes', (req, res) => {
 });
 
 router.post('/recipe', passport.authenticate('jwt', { session: false }), upload.single('somefile'), (req, res) => {
+  req.body.ingredients = JSON.parse(req.body.ingredients);
+  req.body.instructions = JSON.parse(req.body.instructions);
   const stream = cloudinary.uploader.upload_stream(
     { folder: "recipes" },
     (error, result) => {

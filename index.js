@@ -12,13 +12,13 @@ require('./passport/passport')(passport);
 
 app.use(passport.initialize());
 
-/*app.use(
+app.use(
     cors( {
       origin: ["http://localhost:3000", "http://192.168.1.234:3000",
        "https://dianas-kitchenette.netlify.app", "http://90.231.157.5"],
         credentials: true,
     })
-  ); */
+  ); 
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
 
