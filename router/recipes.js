@@ -42,6 +42,7 @@ router.post('/recipe', passport.authenticate('jwt', { session: false }), upload.
     (error, result) => {
       if (error) return console.error(error);
       req.body.imgUrl = result.secure_url;
+      req.body.imgId = result.public_id;
       Recipe.create(req.body, function (err, recipe) {
         if (err) return handleError(err);
         console.log(recipe)
@@ -61,7 +62,10 @@ router.put('/recipe/:id', passport.authenticate('jwt', { session: false }), (req
     .catch(err => handleError(err))
   });
   
-router.delete('/recipe/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.delete('/recipe/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const {imgId} = await Recipe.findOne({ _id: req.params.id }, 'imgId');
+  cloudinary.uploader.destroy(imgId, function(error,result) {
+    console.log(result, error) });
     Recipe.deleteOne({_id: req.params.id})
     .then(result => res.send(result))
     .catch(err => handleError(err))
