@@ -6,6 +6,9 @@ const recipeSchema = new Schema({
   category: String,
   imgUrl: String,
   imgId: String,
+  cookTime: String,
+  calories: Number,
+  servings: Number,
   ingredients: [String],
   instructions: [String]
 });
