@@ -9,6 +9,7 @@ const recipeSchema = new Schema({
   cookTime: String,
   calories: Number,
   servings: Number,
+  cost: Number,
   ingredients: [String],
   instructions: [String]
 });
