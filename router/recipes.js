@@ -55,7 +55,9 @@ router.post('/recipe', passport.authenticate('jwt', { session: false }), upload.
   bufferToStream(req.file.buffer).pipe(stream);
 });
   
-router.put('/recipe/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.put('/recipe/:id', passport.authenticate('jwt', { session: false }),upload.none('somefile'), (req, res) => {
+  req.body.ingredients = JSON.parse(req.body.ingredients);
+  req.body.instructions = JSON.parse(req.body.instructions);
     Recipe.findOneAndUpdate(
       {_id: req.params.id},
       req.body,
